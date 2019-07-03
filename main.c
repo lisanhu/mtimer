@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "timer.h"
+#include "mtimer.h"
 
 int main() {
-    timer t;
+    mtimer t;
     timer_start(&t);
     ts_t interval = {0, 1000000L};
     nanosleep(&interval, NULL);
