@@ -4,7 +4,7 @@
 #include "mtimer.h"
 
 
-mtimer_entries logger;
+mtimer_logger logger;
 
 typedef struct timespec ts_t;
 

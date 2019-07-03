@@ -18,14 +18,14 @@
 #endif
 #include <pthread.h>
 
-typedef struct mtimer_entries {
+typedef struct mtimer_logger {
     char const **fnames;
     clock_t *elapses;
     uint64_t len, cap;
     pthread_mutex_t lock;
-} mtimer_entries;
+} mtimer_logger;
 
-extern mtimer_entries logger;
+extern mtimer_logger logger;
 
 static void dump_log() {
     for (uint64_t i = 0; i < logger.len; ++i) {
@@ -40,7 +40,7 @@ if (!(ptr)) { \
     exit(-1); \
 }
 
-static mtimer_entries log_new() {
+static mtimer_logger log_new() {
     int const INIT_CAP = 100000;
 
     char const **fnames = (char const **) (
@@ -55,7 +55,7 @@ static mtimer_entries log_new() {
 
     CHECK_PTR(elapses)
 
-    mtimer_entries log;
+    mtimer_logger log;
     log.fnames = fnames;
     log.elapses = elapses;
     log.len = 0;
@@ -64,7 +64,7 @@ static mtimer_entries log_new() {
     return log;
 }
 
-static void log_puts(mtimer_entries *log, char const *fname, clock_t elapse) {
+static void log_puts(mtimer_logger *log, char const *fname, clock_t elapse) {
     pthread_mutex_lock(&log->lock);
 
     if (log->cap < log->len + 1) {
