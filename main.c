@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include "mtimer.h"
 
+mtimer_entries logger;
+
+typedef struct timespec ts_t;
+
 int main() {
-    mtimer t;
-    timer_start(&t);
-    ts_t interval = {0, 1000000L};
+    logger = log_new();
+    atexit(dump_log);
+    TIMER_START
+    ts_t interval = {1, 0};
     nanosleep(&interval, NULL);
-    timer_stop(&t);
-    timer_elog(__PRETTY_FUNCTION__, t);
+    TIMER_STOP
     return 0;
 }
