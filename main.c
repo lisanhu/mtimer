@@ -9,7 +9,7 @@ int main() {
     logger = log_new();
     atexit(dump_log);
     TIMER_START
-    ts_t interval = {1, 0};
+    ts_t interval = {3, 0};
     nanosleep(&interval, NULL);
     TIMER_STOP
     return 0;
